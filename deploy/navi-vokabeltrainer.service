@@ -1,0 +1,31 @@
+[Unit]
+Description=Na'vi Vokabeltrainer (Node/Express)
+After=network.target
+
+[Service]
+Type=simple
+User=navivoktrainer
+Group=navivoktrainer
+WorkingDirectory=/opt/navi-vokabeltrainer
+ExecStart=/usr/local/bin/node server.js
+Restart=on-failure
+RestartSec=5
+Environment=PORT=3700
+Environment=DB_PATH=/opt/navi-vokabeltrainer/data/navi-vokabeltrainer.db
+# SESSION_SECRET wird per EnvironmentFile gesetzt, nicht hier inline
+# (Secrets nicht in versionierten Dateien) - siehe deploy/README.md.
+# Bewusst OHNE fuehrendes "-": eine fehlende/verrutschte session.env soll
+# den Dienststart hart fehlschlagen lassen statt still mit einem
+# pro-Prozess-zufaelligen SESSION_SECRET und COOKIE_SECURE=unset weiterzulaufen
+# (Session-Fixation-/Cookie-Security-Finding, siehe Security-Findings-Seite).
+EnvironmentFile=/opt/navi-vokabeltrainer/session.env
+
+# Hardening (analog Mission-Marvel)
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/navi-vokabeltrainer/data
+
+[Install]
+WantedBy=multi-user.target

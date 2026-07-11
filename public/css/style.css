@@ -1,0 +1,770 @@
+/* Na'vi Vokabeltrainer - Avatar/Pandora-Theme
+   Farbwelt: tiefes Bioluminesz-Blau/Violett + leuchtendes Cyan/Grün als Akzent,
+   angelehnt an Pandora-Nachtszenen. */
+
+:root {
+  --bg-deep: #050914;
+  --bg-panel: #0d1526;
+  --bg-panel-2: #121e35;
+  --border: #1f3350;
+  --text: #dbe7f2;
+  --text-dim: #8ea3bd;
+  --accent: #35e0c9;
+  --accent-2: #7c5cff;
+  --accent-glow: rgba(53, 224, 201, 0.35);
+  --danger: #ff6b6b;
+  --ok: #4ade80;
+  --radius: 14px;
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+}
+
+* { box-sizing: border-box; }
+
+/* Erzwingt, dass das hidden-Attribut IMMER greift, auch wenn ein Element
+   (wie .topnav oder .nav-toggle) eine eigene unbedingte display-Regel hat -
+   ohne dieses Reset wuerde die Autor-Regel laut CSS-Kaskade die UA-Regel
+   [hidden]{display:none} ueberstimmen (Origin-Prioritaet schlaegt
+   Spezifitaet), und das Element bliebe trotz hidden-Attribut sichtbar. */
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: radial-gradient(circle at 20% -10%, #142445 0%, var(--bg-deep) 55%);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+a { color: inherit; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(5, 9, 20, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: 1;
+}
+
+.topnav a {
+  text-decoration: none;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  transition: color 0.15s;
+}
+.topnav a:hover { color: var(--accent); }
+
+/* Nav-Dropdowns (Vokabeltrainer/Grammatik): reines CSS-:hover/:focus-within,
+   kein JS noetig. Der Oberpunkt ist selbst ein normaler, klickbarer Link. */
+.nav-dropdown {
+  position: relative;
+}
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  /* top:100% mit padding statt margin fuer den Abstand zum Oberpunkt - eine
+     margin-Luecke liegt AUSSERHALB der Box und ist damit nicht Teil der
+     :hover-Flaeche, wodurch die Maus beim Reinziehen ins Dropdown kurz aus
+     .nav-dropdown "rausrutscht" und das Menue sofort wieder schliesst.
+     Mit padding-top bleibt die komplette Flaeche inklusive des Abstands
+     durchgehend hoverbar. */
+  top: 100%;
+  left: 0;
+  padding: 14px 6px 6px 6px;
+  background: var(--bg-panel);
+  background-clip: padding-box;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  min-width: 170px;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 60;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+  display: flex;
+}
+.nav-dropdown-menu a {
+  padding: 8px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.nav-dropdown-menu a:hover {
+  background: var(--bg-panel-2);
+}
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.nav-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+.lang-switch {
+  margin-left: auto;
+}
+.lang-switch select {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.lang-switch select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button.ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+button.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+main#app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+  min-height: 70vh;
+}
+
+/* Einheitlicher Abstand zwischen allen direkten Seitenbloecken (Cards,
+   Grid-Reihen, etc.) - vorher stand der Abstand nur auf ".card + .card",
+   wodurch z.B. eine ".grid"-Reihe (Profil: Vokabeln/Grammatik) direkt an
+   die Card davor/danach anstiess, ohne jeden Zwischenraum. */
+main#app > * + * { margin-top: 18px; }
+
+.footer {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  padding: 24px;
+  border-top: 1px solid var(--border);
+}
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.footer-nav a {
+  color: var(--text-dim);
+  text-decoration: none;
+}
+.footer-nav a:hover { color: var(--accent); }
+
+.legal-notice {
+  background: var(--bg-panel-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+.legal-text h3 { margin-top: 20px; margin-bottom: 6px; }
+.legal-text h3:first-child { margin-top: 0; }
+.legal-text p { color: var(--text); line-height: 1.6; }
+
+/* Cookie-Banner: echtes Opt-in, blockiert bis zur Entscheidung nichts
+   inhaltlich, haengt nur unten fest sichtbar. */
+.cookie-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.35);
+}
+.cookie-banner-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.cookie-banner-inner p {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 240px;
+}
+.cookie-banner-inner a { color: var(--accent); }
+.cookie-banner-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Welcome-Tour: .tour-spot nutzt einen riesigen box-shadow-Spread als
+   abgedunkelten Hintergrund ausserhalb des Zielrechtecks - kein separates
+   Backdrop-Element noetig, das Ziel bleibt dadurch echt klickbar/sichtbar. */
+.tour-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  pointer-events: none;
+}
+.tour-spot {
+  position: fixed;
+  border-radius: 10px;
+  box-shadow: 0 0 0 9999px rgba(4, 10, 20, 0.78);
+  border: 2px solid var(--accent);
+  transition: all 0.2s ease;
+}
+.tour-tooltip {
+  position: fixed;
+  z-index: 301;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  max-width: 320px;
+  pointer-events: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+.tour-tooltip-centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 380px;
+  box-shadow: 0 0 0 9999px rgba(4, 10, 20, 0.78);
+}
+.tour-tooltip h3 { margin-top: 8px; margin-bottom: 8px; }
+.tour-tooltip p { color: var(--text); font-size: 0.9rem; line-height: 1.5; }
+.tour-step-indicator {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tour-tooltip-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* Hero - reiner Farbverlauf statt Fotos/Illustrationen (keine Lizenzfragen,
+   passt sich automatisch an Theme-Farben an, kein Bild-Download noetig). */
+.hero {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-height: 320px;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: var(--shadow);
+  margin-bottom: 28px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(53, 224, 201, 0.28), transparent 55%),
+    radial-gradient(circle at 85% 85%, rgba(124, 92, 255, 0.32), transparent 55%),
+    linear-gradient(135deg, #0d1526 0%, #142445 55%, #0d1526 100%);
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5,9,20,0.15) 0%, rgba(5,9,20,0.92) 92%);
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 32px;
+}
+.hero h1 {
+  font-size: 2rem;
+  margin: 0 0 8px;
+}
+.hero p {
+  color: var(--text-dim);
+  margin: 0;
+  max-width: 480px;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+}
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+/* Forms */
+label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+input, select, textarea {
+  width: 100%;
+  background: var(--bg-panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #04150f;
+  border: none;
+  padding: 11px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.1s, filter 0.15s;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-danger {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+}
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.login-wrap {
+  max-width: 420px;
+  margin: 0 auto;
+}
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 18px;
+  background: var(--bg-panel-2);
+  border-radius: 999px;
+  padding: 3px;
+}
+.tabs button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  padding: 9px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.tabs button.active {
+  background: var(--accent);
+  color: #04150f;
+}
+
+.error-msg {
+  color: var(--danger);
+  font-size: 0.85rem;
+  margin: -6px 0 12px;
+}
+.ok-msg {
+  color: var(--ok);
+  font-size: 0.85rem;
+  margin: -6px 0 12px;
+}
+.hint-text {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin: 10px 0 0;
+}
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 6px 0 14px;
+}
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: normal;
+  cursor: pointer;
+}
+.radio-label input[type="radio"] {
+  width: auto;
+}
+
+/* Vokabel-Editor */
+.vocab-form-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 22px 0 10px;
+}
+.vocab-form-eyebrow:first-child { margin-top: 0; }
+
+.vocab-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0 16px;
+}
+
+/* Inschrift-Panel: das Na'vi-Feld ist das Herzstueck des Formulars (der
+   ganze Zweck der App), deshalb visuell abgesetzt von den restlichen
+   Metadaten-Feldern - wie eine leuchtende Karteikarte im Kleinformat. */
+.navi-panel {
+  position: relative;
+  background: radial-gradient(circle at 15% 0%, rgba(53, 224, 201, 0.08), transparent 60%), var(--bg-panel-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 18px 14px;
+  margin-bottom: 8px;
+}
+.navi-toolbar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+}
+.navi-toolbar-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+  color: var(--text-dim);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.navi-toolbar-btn:hover { color: var(--accent); border-color: var(--accent); }
+.navi-toolbar-btn.active {
+  color: #04150f;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.navi-editable {
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  padding: 6px 42px 6px 2px;
+  min-height: 1.4em;
+  outline: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.navi-editable u {
+  color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.navi-editable:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text-dim);
+  font-weight: 400;
+}
+.navi-editable:focus {
+  box-shadow: none;
+}
+.navi-panel:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.navi-panel-hint {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+/* Table */
+table { width: 100%; border-collapse: collapse; }
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+th { color: var(--text-dim); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+.tag.admin { border-color: var(--accent); color: var(--accent); }
+
+.row-actions { display: flex; gap: 8px; }
+.row-actions button {
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.row-actions button:hover { color: var(--accent); }
+.row-actions button.danger:hover { color: var(--danger); }
+
+/* Flashcard */
+.flashcard {
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+}
+.flashcard-word {
+  font-size: 2.4rem;
+  font-weight: 700;
+  padding: 60px 20px;
+  background: var(--bg-panel-2);
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.flashcard-hint {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+.flashcard-meta {
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  font-style: italic;
+  margin-top: -14px;
+  margin-bottom: 12px;
+}
+.flashcard-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* Grammatik-Baukasten */
+.infix-word {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 24px 0;
+}
+.infix-gap {
+  display: inline-block;
+  min-width: 2.2em;
+  border-bottom: 3px dashed var(--accent);
+  margin: 0 2px;
+  height: 1.2em;
+  vertical-align: bottom;
+}
+.infix-tile-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.infix-tile {
+  display: inline-block;
+  padding: 10px 20px;
+  background: var(--accent);
+  color: #04150f;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.infix-tile.dragging {
+  cursor: grabbing;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.suffix-sentence {
+  font-size: 1.3rem;
+  line-height: 2.4;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.suffix-input {
+  width: 70px;
+  display: inline-block;
+  text-align: center;
+  margin: 0 4px;
+}
+.suffix-sentence select {
+  display: inline-block;
+  width: auto;
+  margin: 0 4px;
+}
+
+.progress-bar-wrap {
+  background: var(--bg-panel-2);
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+  margin: 8px 0 18px;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.filters { display: flex; gap: 12px; align-items: flex-end; margin-bottom: 18px; flex-wrap: wrap; }
+.filters > div { flex: 1; min-width: 160px; }
+
+.section-title {
+  font-size: 1.3rem;
+  margin: 0 0 16px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-dim);
+  padding: 40px 20px;
+}
+
+/* ===== Responsive: Tablet ===== */
+@media (max-width: 880px) {
+  .topbar-inner { flex-wrap: wrap; gap: 12px; }
+  .nav-toggle { display: inline-flex; align-items: center; }
+
+  /* Nav klappt unterhalb der Kopfzeile als vertikale Liste auf statt als
+     horizontale Reihe mit Hover-Dropdowns - Touch-Geraete kennen kein
+     :hover, deshalb steuert #navToggle (app.js) die Sichtbarkeit per
+     Klasse statt die Maus. */
+  .topnav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px 18px;
+    box-shadow: var(--shadow);
+  }
+  .topnav:not([hidden]).nav-open { display: flex; }
+  .topnav a, .topnav button.ghost {
+    padding: 10px 4px;
+    text-align: left;
+    width: 100%;
+  }
+  .nav-dropdown { position: static; }
+  .nav-dropdown-menu {
+    display: flex !important;
+    position: static;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    padding: 2px 0 2px 16px;
+    min-width: 0;
+  }
+  .nav-dropdown-menu a { white-space: normal; }
+
+  main#app { padding: 22px 16px 48px; }
+  .card { padding: 18px; }
+  .hero { min-height: 240px; }
+  .hero-content { padding: 22px; }
+  .hero h1 { font-size: 1.6rem; }
+
+  table { display: block; max-width: 100%; overflow-x: auto; }
+}
+
+/* ===== Responsive: Smartphone ===== */
+@media (max-width: 560px) {
+  .topbar-inner { padding: 12px 14px; gap: 10px; }
+  .brand { font-size: 1rem; }
+  main#app { padding: 18px 12px 40px; }
+  .card { padding: 14px; border-radius: 10px; }
+
+  .hero { min-height: 200px; margin-bottom: 20px; }
+  .hero-content { padding: 16px; }
+  .hero h1 { font-size: 1.35rem; }
+  .hero p { font-size: 0.9rem; }
+
+  .flashcard-word { font-size: 1.7rem; padding: 36px 14px; }
+  .infix-word { font-size: 1.4rem; margin: 16px 0; }
+  .suffix-sentence { font-size: 1.05rem; line-height: 2; }
+  .navi-editable { font-size: 1.25rem; }
+
+  .tour-tooltip, .tour-tooltip-centered {
+    max-width: calc(100vw - 32px);
+    padding: 14px 16px;
+  }
+
+  .btn { padding: 10px 18px; font-size: 0.9rem; }
+  .cookie-banner-inner { padding: 14px 16px; }
+}

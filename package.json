@@ -1,0 +1,21 @@
+{
+  "name": "navi-vokabeltrainer",
+  "version": "1.0.0",
+  "description": "Na'vi-Vokabeltrainer (15 Sprachen, Live-Fwew-API) mit Grammatik-Baukasten und Userverwaltung",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "import-vocab": "node db/import-vocab.js",
+    "import-priority-vocab": "node db/import-priority-vocab.js",
+    "import-priority-vocab-fwew": "node db/import-priority-vocab-fwew.js",
+    "migrate-progress-to-fwew": "node db/migrate-progress-to-fwew.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.0",
+    "express-session": "^1.18.0",
+    "helmet": "^7.1.0"
+  }
+}

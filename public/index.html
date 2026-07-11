@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Na'vi Trainer</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#/willkommen" class="brand" data-i18n="brand">Na'vi Trainer</a>
+    <button id="navToggle" class="nav-toggle" type="button" aria-label="Menü" aria-expanded="false" hidden>&#9776;</button>
+    <nav class="topnav" id="topnav" hidden>
+      <div class="nav-dropdown">
+        <a href="#/trainer" id="navVokabeltrainer" data-i18n="nav_vokabeltrainer">Vokabeltrainer</a>
+        <div class="nav-dropdown-menu">
+          <a href="#/activate" data-i18n="nav_activate">Aktivieren</a>
+          <a href="#/trainer" data-i18n="nav_trainer">Trainer</a>
+          <!-- Vokabel-Editor auf Eis gelegt (Umstellung auf Live-Fwew-API) -
+               Route/Seite bleiben im Code, nur der Nav-Link ist ausgeblendet. -->
+          <a href="#/vocab" data-i18n="nav_vocab" hidden>Vokabeln</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <a href="#/grammatik" id="navGrammatikTop" data-i18n="nav_grammatik">Grammatik</a>
+        <div class="nav-dropdown-menu">
+          <a href="#/grammatik/erstellen" id="navGrammarCreate" data-i18n="nav_grammatik_erstellen" hidden>Übung erstellen</a>
+          <a href="#/grammatik/review" id="navGrammarReview" data-i18n="nav_grammatik_review" hidden>Review</a>
+        </div>
+      </div>
+      <a href="#/profil" id="navProfil" data-i18n="nav_profil">Profil</a>
+      <a href="#/admin" id="navAdmin" data-i18n="nav_admin" hidden>Admin</a>
+      <button id="btnLogout" class="ghost" data-i18n="nav_logout">Abmelden</button>
+    </nav>
+    <div class="lang-switch">
+      <select id="langSelect" aria-label="Language">
+        <option value="de">Deutsch</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="et">Eesti</option>
+        <option value="fr">Français</option>
+        <option value="hu">Magyar</option>
+        <option value="it">Italiano</option>
+        <option value="ko">한국어</option>
+        <option value="nl">Nederlands</option>
+        <option value="pl">Polski</option>
+        <option value="pt">Português</option>
+        <option value="ru">Русский</option>
+        <option value="sv">Svenska</option>
+        <option value="tr">Türkçe</option>
+        <option value="uk">Українська</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="footer">
+  <nav class="footer-nav">
+    <a href="#/impressum" data-i18n="nav_impressum">Impressum</a>
+    <a href="#/datenschutz" data-i18n="nav_datenschutz">Datenschutz</a>
+    <a href="#/quellen" data-i18n="nav_quellen">Quellen</a>
+    <a href="#/danksagung" data-i18n="nav_danksagung">Danksagung</a>
+    <a href="https://github.com/Baeumert/navi-lernwebseite" target="_blank" rel="noopener" data-i18n="nav_source">Quellcode</a>
+  </nav>
+</footer>
+
+<div id="cookieBanner" class="cookie-banner" hidden></div>
+
+<script src="/js/i18n.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
