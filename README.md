@@ -19,6 +19,27 @@ Live-Referenzinstanz: **https://navi.diy-ehome.de/**
 > lizenzierten Design-Referenzbilder aus dem privaten Arbeitsrepo). Lizenz:
 > siehe [`LICENSE`](LICENSE) (AGPL-3.0).
 
+## Demo-Zugänge (Live-Referenzinstanz)
+
+Zum Ausprobieren auf https://navi.diy-ehome.de/ ohne eigene Registrierung
+(Selbstregistrierung ist dort nach dem ersten Admin geschlossen) gibt es
+drei öffentliche Preview-Konten, eines pro Rolle:
+
+| Rolle | E-Mail | Passwort |
+|---|---|---|
+| Lernende(r) | `demo-lerner@navi.diy-ehome.de` | `lerner123` |
+| Creator ("Lehrer", legt Grammatik-Übungen an) | `demo-lehrer@navi.diy-ehome.de` | `lehrer123` |
+| Reviewer (gibt Übungen frei) | `demo-reviewer@navi.diy-ehome.de` | `reviewer123` |
+
+**Alle Eingaben dieser drei Konten werden automatisch 120 Minuten nach der
+letzten Änderung wieder gelöscht** (`scripts/cleanup_demo_users.js`, per
+Cron alle 10 Minuten) - die Demo-Umgebung setzt sich also von selbst
+zurück. Name, Passwort und Rollen werden bei jedem Lauf ebenfalls auf den
+hier dokumentierten Zustand zurückgesetzt. Bei eigenem Deployment dieses
+Codes existieren diese Konten nicht automatisch - das Skript legt nur
+bereits vorhandene Konten mit diesen E-Mail-Adressen fest, siehe
+Skript-Kommentar.
+
 ## Vokabeltrainer
 
 - Vokabeln (Na'vi-Wort + alle verfügbaren Übersetzungen) werden **nicht

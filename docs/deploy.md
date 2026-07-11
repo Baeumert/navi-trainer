@@ -102,6 +102,31 @@ Kein Seed-Admin wird automatisch angelegt. Die **erste Person, die sich über
 `routes/auth.js`, greift nur wenn die `users`-Tabelle leer ist). Ronny sollte
 sich also direkt nach dem ersten Start als Erstes registrieren.
 
+## Demo-Zugänge (2026-07-11)
+
+Drei öffentliche Preview-Konten (Lerner/Creator/Reviewer, siehe README
+"Demo-Zugänge" für die konkreten Zugangsdaten) wurden direkt per
+Node-Script gegen die Live-DB angelegt:
+
+```bash
+ssh "$DEPLOY_HOST" "cd /opt/navi-vokabeltrainer && node -e \"...\""
+```
+
+(siehe Git-Historie des internen Repos für das exakte Einmal-Script -
+danach nicht mehr nötig, da `scripts/cleanup_demo_users.js` die drei
+Konten bei jedem Lauf ohnehin auf ihren Ausgangszustand zurücksetzt statt
+sie neu anzulegen).
+
+**Cron-Setup auf dem Zielhost** (einmalig nach dem ersten Deploy dieses
+Features):
+
+```bash
+(crontab -l 2>/dev/null; echo "*/10 * * * * cd /opt/navi-vokabeltrainer && node scripts/cleanup_demo_users.js >> /var/log/navi-demo-cleanup.log 2>&1") | crontab -
+```
+
+Details zur Lösch-/Reset-Logik direkt im Skript-Kommentar
+(`scripts/cleanup_demo_users.js`).
+
 ## Datenmodell (Live-Fwew-Modus, seit der Umstellung)
 
 Vokabeln (Na'vi-Wort + Übersetzungen) werden **nicht mehr lokal
