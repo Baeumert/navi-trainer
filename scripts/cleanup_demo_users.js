@@ -1,10 +1,12 @@
 // Rollierende Bereinigung fuer die drei oeffentlichen Preview-/Demo-Konten
 // (siehe README "Demo-Zugaenge"). Zwei unabhaengige Massnahmen bei jedem
 // Lauf:
-// 1. Passwort/Name/Rollen/Na'vi-Name jedes Demo-Kontos werden IMMER (nicht
-//    erst nach 120 Min) auf den bekannten, oeffentlich dokumentierten
-//    Ausgangszustand zurueckgesetzt - sonst koennte ein Besucher, der das
-//    Passwort aendert, den naechsten Besucher aussperren.
+// 1. Passwort/Name/Rollen/Na'vi-Name/Welcome-Tour-Status jedes Demo-Kontos
+//    werden IMMER (nicht erst nach 120 Min) auf den bekannten, oeffentlich
+//    dokumentierten Ausgangszustand zurueckgesetzt - sonst koennte ein
+//    Besucher, der das Passwort aendert, den naechsten Besucher
+//    aussperren, und die Welcome-Tour wuerde nach dem ersten Demo-Besuch
+//    fuer alle folgenden Besucher dauerhaft ausbleiben.
 // 2. Lern-/Uebungsdaten dieser Accounts werden 120 Minuten nach ihrer
 //    letzten Aenderung geloescht, damit die Demo-Umgebung sich selbst
 //    zuruecksetzt und keine dauerhaften Spuren im Produktivsystem
@@ -28,14 +30,20 @@ const DEMO_ACCOUNTS = [
 ];
 const MAX_AGE_MINUTES = 120;
 
-// Zugangsdaten/Anzeigename/Rollen jedes Demo-Kontos bei JEDEM Lauf hart auf
-// den bekannten, oeffentlich dokumentierten Ausgangszustand zurueckstellen
-// (nicht erst nach 120 Min) - sonst koennte ein Besucher, der Passwort oder
-// Namen aendert, den naechsten Besucher aussperren bzw. das Konto
-// verfaelschen, ggf. schon Minuten spaeter statt erst nach zwei Stunden.
+// Zugangsdaten/Anzeigename/Rollen/Welcome-Tour-Status jedes Demo-Kontos bei
+// JEDEM Lauf hart auf den bekannten, oeffentlich dokumentierten
+// Ausgangszustand zurueckstellen (nicht erst nach 120 Min) - sonst koennte
+// ein Besucher, der Passwort oder Namen aendert, den naechsten Besucher
+// aussperren bzw. das Konto verfaelschen, ggf. schon Minuten spaeter statt
+// erst nach zwei Stunden. welcome_seen=0 sorgt dafuer, dass die
+// interaktive Welcome-Tour beim naechsten Login wieder automatisch
+// startet, statt fuer immer "gesehen" zu bleiben, weil ein frueherer
+// Demo-Besucher sie schon einmal beendet/uebersprungen hat - es gibt
+// keinen Zeitstempel fuer "zuletzt gesehen", daher hier an denselben
+// Sofort-Reset gekoppelt statt an die 120-Minuten-Datenloeschung unten.
 for (const acc of DEMO_ACCOUNTS) {
   db.prepare(
-    'UPDATE users SET name = ?, password_hash = ?, is_admin = 0, is_creator = ?, is_reviewer = ?, navi_name = NULL, credit_name_pref = ? WHERE email = ?'
+    'UPDATE users SET name = ?, password_hash = ?, is_admin = 0, is_creator = ?, is_reviewer = ?, navi_name = NULL, credit_name_pref = ?, welcome_seen = 0 WHERE email = ?'
   ).run(acc.name, hashPassword(acc.password), acc.is_creator, acc.is_reviewer, 'real', acc.email);
 }
 

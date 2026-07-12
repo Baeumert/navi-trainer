@@ -34,8 +34,10 @@ drei öffentliche Preview-Konten, eines pro Rolle:
 **Alle Eingaben dieser drei Konten werden automatisch 120 Minuten nach der
 letzten Änderung wieder gelöscht** (`scripts/cleanup_demo_users.js`, per
 Cron alle 10 Minuten) - die Demo-Umgebung setzt sich also von selbst
-zurück. Name, Passwort und Rollen werden bei jedem Lauf ebenfalls auf den
-hier dokumentierten Zustand zurückgesetzt. Bei eigenem Deployment dieses
+zurück. Name, Passwort, Rollen und Welcome-Tour-Status werden bei jedem
+Lauf ebenfalls auf den hier dokumentierten Zustand zurückgesetzt - die
+interaktive Welcome-Tour startet also für jeden neuen Demo-Besuch wieder
+automatisch. Bei eigenem Deployment dieses
 Codes existieren diese Konten nicht automatisch - das Skript legt nur
 bereits vorhandene Konten mit diesen E-Mail-Adressen fest, siehe
 Skript-Kommentar.
