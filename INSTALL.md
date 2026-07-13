@@ -38,31 +38,48 @@ installierten Host aktualisiert Code (`git pull`) und Dependencies, ohne
    (nur beim ersten Lauf).
 6. `npm ci --omit=dev` als Service-User ausführen.
 7. systemd-Unit und nginx-Reverse-Proxy-Config aus `deploy/` einspielen,
-   Dienst aktivieren und starten.
-8. Smoke-Test gegen `http://127.0.0.1:3700/`.
+   dabei ein **selbstsigniertes TLS-Zertifikat generieren** und einen
+   zusätzlichen HTTPS-Server-Block auf Port 443 einrichten (siehe Warnung
+   unten), Dienst aktivieren und starten.
+8. Smoke-Test gegen `http://127.0.0.1:3700/` und `https://127.0.0.1/`.
 
 ## Danach
 
-1. Im Browser öffnen (über nginx auf Port 80, oder testweise direkt Port
-   3700) und die **erste Registrierung** durchführen - dieses Konto wird
-   automatisch Admin (kein Seed-Admin, Bootstrap-Regel in `routes/auth.js`,
-   greift nur bei leerer `users`-Tabelle).
+1. Im Browser öffnen unter `http://<Server-IP>/` **oder**
+   `https://<Server-IP>/` und die **erste Registrierung** durchführen -
+   dieses Konto wird automatisch Admin (kein Seed-Admin, Bootstrap-Regel in
+   `routes/auth.js`, greift nur bei leerer `users`-Tabelle). Bei HTTPS zeigt
+   der Browser wegen des selbstsignierten Zertifikats einmalig eine
+   Warnung ("Erweitert" → "Trotzdem fortfahren") - das ist erwartet, kein
+   Fehler.
 2. Optional Prioritäts-Vokabular importieren:
    ```bash
    su -s /bin/sh navivoktrainer -c "cd /opt/navi-vokabeltrainer && npm run import-priority-vocab-fwew"
    ```
 3. Für echten öffentlichen Betrieb: eigene Domain in
-   `/etc/nginx/sites-available/navi-vokabeltrainer` eintragen, TLS
-   einrichten (eigenes nginx oder vorgeschalteter Reverse Proxy),
-   Impressum/Datenschutz im Code an die eigene Rechtslage anpassen (siehe
-   `docs/deploy.md`, Abschnitt "Öffentlicher Zugriff").
+   `/etc/nginx/sites-available/navi-vokabeltrainer` eintragen, das
+   selbstsignierte Zertifikat durch ein echtes (z.B. Let's Encrypt/certbot)
+   ersetzen, Impressum/Datenschutz im Code an die eigene Rechtslage
+   anpassen (siehe `docs/deploy.md`, Abschnitt "Öffentlicher Zugriff").
 
 ## Erkenntnisse aus dem Testlauf (Stolperfallen für Nachbauer)
 
-Diese vier Punkte standen so nicht explizit in der bisherigen
-`docs/deploy.md` und haben den ersten unbeaufsichtigten Lauf gebrochen -
-`install.sh` deckt sie jetzt automatisch ab, wer manuell installiert sollte
-sie kennen:
+Diese fünf Punkte standen so nicht explizit in der bisherigen
+`docs/deploy.md` und haben den ersten unbeaufsichtigten Lauf gebrochen bzw.
+zu einer sichtbar kaputten Seite geführt - `install.sh` deckt sie jetzt
+automatisch ab, wer manuell installiert sollte sie kennen:
+
+- **Ohne HTTPS-Listener sehen viele Nutzer eine komplett unstylte, kaputte
+  Seite**, obwohl die App selbst einwandfrei läuft. Grund: moderne Browser
+  stufen Subresource-Requests (CSS/JS) oft eigenständig auf HTTPS hoch
+  ("Always use secure connections"-Einstellung bzw. diverse Extensions),
+  auch wenn die Seite selbst ganz normal per `http://` aufgerufen wurde -
+  ohne einen antwortenden Port 443 schlagen diese hochgestuften Requests
+  mit `ERR_CONNECTION_REFUSED` fehl (in den Browser-Devtools an lauter
+  roten Netzwerkfehlern für `style.css`/`app.js`/etc. zu erkennen).
+  `install.sh` generiert deshalb automatisch ein selbstsigniertes
+  Zertifikat und öffnet Port 443 mit - kein zusätzlicher Schritt nötig,
+  nur die einmalige Zertifikatswarnung im Browser wegklicken.
 
 - **`rsync` ist auf einem frischen Debian-12-Image nicht vorinstalliert**,
   obwohl `deploy/deploy.sh` (für Updates von einer Entwicklungsmaschine

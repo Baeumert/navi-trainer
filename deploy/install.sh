@@ -69,6 +69,51 @@ su -s /bin/sh "$SVC_USER" -c "cd '$APP_DIR' && /usr/local/bin/npm ci --omit=dev"
 echo "==> systemd-Unit + nginx-Reverse-Proxy einrichten"
 cp "$APP_DIR/deploy/navi-vokabeltrainer.service" /etc/systemd/system/
 cp "$APP_DIR/deploy/nginx-navi-vokabeltrainer.conf" /etc/nginx/sites-available/navi-vokabeltrainer
+
+# Selbstsigniertes TLS-Zertifikat + HTTPS-Server-Block ergaenzen. Grund: viele
+# Browser stufen Subresource-Requests (CSS/JS) eigenstaendig auf HTTPS hoch
+# ("Always use secure connections"-Einstellung bzw. diverse Extensions),
+# selbst wenn die Seite selbst ganz normal per HTTP aufgerufen wurde - ohne
+# einen funktionierenden HTTPS-Listener bricht das mit ERR_CONNECTION_REFUSED
+# und einer komplett unstylten Seite (beobachtet+reproduziert 2026-07-13 bei
+# einem echten Testinstall). Ein per Reverse-Proxy/eigener Domain mit echtem
+# Zertifikat betriebenes Setup (siehe docs/deploy.md, "Oeffentlicher
+# Zugriff") ersetzt diesen Block ohnehin durch die eigene TLS-Terminierung -
+# dieses selbstsignierte Zertifikat ist nur eine sofort funktionierende
+# Grundabsicherung fuer den direkten Erstzugriff per IP.
+if [ ! -f /etc/nginx/ssl/navi-vokabeltrainer.crt ]; then
+  mkdir -p /etc/nginx/ssl
+  HOST_IP=$(hostname -I | awk '{print $1}')
+  openssl req -x509 -nodes -days 825 -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/navi-vokabeltrainer.key \
+    -out /etc/nginx/ssl/navi-vokabeltrainer.crt \
+    -subj "/CN=${HOST_IP:-localhost}" \
+    -addext "subjectAltName=IP:${HOST_IP:-127.0.0.1}" >/dev/null 2>&1
+fi
+cat >> /etc/nginx/sites-available/navi-vokabeltrainer <<'NGINXEOF'
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name navi.diy-ehome.de _;
+    server_tokens off;
+
+    ssl_certificate /etc/nginx/ssl/navi-vokabeltrainer.crt;
+    ssl_certificate_key /etc/nginx/ssl/navi-vokabeltrainer.key;
+
+    location / {
+        proxy_pass http://127.0.0.1:3700;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $navi_forwarded_proto;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+NGINXEOF
+
 ln -sf /etc/nginx/sites-available/navi-vokabeltrainer /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 nginx -t
@@ -83,18 +128,26 @@ if curl -fs -o /dev/null http://127.0.0.1:3700/; then
 else
   echo "WARNUNG: App antwortet nicht - 'systemctl status navi-vokabeltrainer' und 'journalctl -u navi-vokabeltrainer' pruefen." >&2
 fi
+if curl -fsk -o /dev/null https://127.0.0.1/; then
+  echo "nginx antwortet auf Port 443 (selbstsigniertes Zertifikat)."
+else
+  echo "WARNUNG: HTTPS antwortet nicht - 'nginx -t' und 'journalctl -u nginx' pruefen." >&2
+fi
 
-cat <<'EOF'
+cat <<EOF
 
 Fertig. Naechste Schritte:
-  1. Ueber den konfigurierten Host (nginx auf Port 80, oder direkt Port 3700)
-     im Browser oeffnen und die ERSTE Registrierung durchfuehren - dieses
-     Konto wird automatisch Admin (kein Seed-Admin vorhanden).
+  1. Im Browser oeffnen unter http://${HOST_IP:-<Server-IP>}/ oder
+     https://${HOST_IP:-<Server-IP>}/ und die ERSTE Registrierung
+     durchfuehren - dieses Konto wird automatisch Admin (kein Seed-Admin
+     vorhanden). Bei HTTPS zeigt der Browser wegen des selbstsignierten
+     Zertifikats einmalig eine Warnung ("Erweitert" -> "Trotzdem
+     fortfahren") - das ist erwartet, kein Fehler.
   2. Optional Prioritaets-Vokabular importieren:
      su -s /bin/sh navivoktrainer -c "cd /opt/navi-vokabeltrainer && npm run import-priority-vocab-fwew"
   3. Fuer echten oeffentlichen Betrieb: eigene Domain in
-     /etc/nginx/sites-available/navi-vokabeltrainer eintragen, TLS
-     (eigenes nginx oder vorgeschalteter Reverse Proxy) einrichten,
-     Impressum/Datenschutz im Code an die eigene Rechtslage anpassen -
-     siehe docs/deploy.md und README.md ("Eigenes Deployment").
+     /etc/nginx/sites-available/navi-vokabeltrainer eintragen, echtes
+     Zertifikat (z.B. Let's Encrypt/certbot) statt des selbstsignierten
+     einrichten, Impressum/Datenschutz im Code an die eigene Rechtslage
+     anpassen - siehe docs/deploy.md und README.md ("Eigenes Deployment").
 EOF
