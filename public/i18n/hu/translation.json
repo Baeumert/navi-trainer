@@ -257,5 +257,7 @@
   "profile_credit_pref_real": "csak valódi név",
   "profile_saved_button": "Mentés",
   "err_navi_name_taken": "Ez a Na'vi név már foglalt.",
-  "nav_source": "Forráskód"
+  "nav_source": "Forráskód",
+  "admin_last_login": "Utolsó bejelentkezés",
+  "admin_never_logged_in": "Soha"
 }

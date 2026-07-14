@@ -257,5 +257,7 @@
   "profile_credit_pref_real": "ainult päris nimi",
   "profile_saved_button": "Salvesta",
   "err_navi_name_taken": "See Na'vi nimi on juba kasutusel.",
-  "nav_source": "Lähtekood"
+  "nav_source": "Lähtekood",
+  "admin_last_login": "Viimane sisselogimine",
+  "admin_never_logged_in": "Mitte kunagi"
 }

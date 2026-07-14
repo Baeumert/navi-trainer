@@ -257,5 +257,7 @@
   "profile_credit_pref_real": "alleen echte naam",
   "profile_saved_button": "Opslaan",
   "err_navi_name_taken": "Deze Na'vi-naam is al in gebruik.",
-  "nav_source": "Broncode"
+  "nav_source": "Broncode",
+  "admin_last_login": "Laatste login",
+  "admin_never_logged_in": "Nooit"
 }

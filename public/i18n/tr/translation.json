@@ -257,5 +257,7 @@
   "profile_credit_pref_real": "yalnızca gerçek ad",
   "profile_saved_button": "Kaydet",
   "err_navi_name_taken": "Bu Na'vi adı zaten alınmış.",
-  "nav_source": "Kaynak Kod"
+  "nav_source": "Kaynak Kod",
+  "admin_last_login": "Son giriş",
+  "admin_never_logged_in": "Hiç"
 }

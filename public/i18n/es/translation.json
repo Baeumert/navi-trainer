@@ -257,5 +257,7 @@
   "profile_credit_pref_real": "solo nombre real",
   "profile_saved_button": "Guardar",
   "err_navi_name_taken": "Este nombre na'vi ya está en uso.",
-  "nav_source": "Código fuente"
+  "nav_source": "Código fuente",
+  "admin_last_login": "Último acceso",
+  "admin_never_logged_in": "Nunca"
 }

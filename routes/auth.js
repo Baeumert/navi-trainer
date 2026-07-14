@@ -92,6 +92,8 @@ router.post('/login', authLimiter, (req, res) => {
     return res.status(401).json({ error: 'invalid_credentials' });
   }
 
+  db.prepare("UPDATE users SET last_login = datetime('now') WHERE id = ?").run(user.id);
+
   req.session.regenerate((err) => {
     if (err) return res.status(500).json({ error: 'session_error' });
     req.session.userId = user.id;

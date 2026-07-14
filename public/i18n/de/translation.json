@@ -257,5 +257,7 @@
   "profile_credit_pref_real": "nur Realname",
   "profile_saved_button": "Speichern",
   "err_navi_name_taken": "Dieser Na'vi-Name ist bereits vergeben.",
-  "nav_source": "Quellcode"
+  "nav_source": "Quellcode",
+  "admin_last_login": "Letzter Login",
+  "admin_never_logged_in": "Noch nie"
 }

@@ -945,6 +945,7 @@ async function renderAdmin(app) {
       el('th', {}, t('admin_name')),
       el('th', {}, t('admin_email')),
       el('th', {}, ''),
+      el('th', {}, t('admin_last_login')),
       el('th', {}, ''),
     ])));
     const tbody = el('tbody');
@@ -992,6 +993,7 @@ async function renderAdmin(app) {
         el('td', {}, u.name),
         el('td', {}, u.email),
         el('td', {}, roleTags),
+        el('td', {}, u.last_login ? new Date(u.last_login + 'Z').toLocaleString() : t('admin_never_logged_in')),
         el('td', {}, actions),
       ]));
     });

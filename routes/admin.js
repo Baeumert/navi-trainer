@@ -19,7 +19,7 @@ function adminCount() {
 }
 
 router.get('/users', (req, res) => {
-  const users = db.prepare('SELECT id, name, email, is_admin, is_creator, is_reviewer, created_at FROM users ORDER BY id').all();
+  const users = db.prepare('SELECT id, name, email, is_admin, is_creator, is_reviewer, created_at, last_login FROM users ORDER BY id').all();
   res.json(users);
 });
 

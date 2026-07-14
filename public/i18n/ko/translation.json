@@ -257,5 +257,7 @@
   "profile_credit_pref_real": "실명만",
   "profile_saved_button": "저장",
   "err_navi_name_taken": "이 나비 이름은 이미 사용 중입니다.",
-  "nav_source": "소스 코드"
+  "nav_source": "소스 코드",
+  "admin_last_login": "마지막 로그인",
+  "admin_never_logged_in": "없음"
 }

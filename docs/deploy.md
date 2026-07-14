@@ -121,8 +121,19 @@ sie neu anzulegen).
 Features):
 
 ```bash
-(crontab -l 2>/dev/null; echo "*/10 * * * * cd /opt/navi-vokabeltrainer && node scripts/cleanup_demo_users.js >> /var/log/navi-demo-cleanup.log 2>&1") | crontab -
+(crontab -l 2>/dev/null; echo "*/10 * * * * cd /opt/navi-vokabeltrainer && /usr/local/bin/node scripts/cleanup_demo_users.js >> /var/log/navi-demo-cleanup.log 2>&1") | crontab -
 ```
+
+**Wichtig: vollen Pfad `/usr/local/bin/node` verwenden, nicht nur
+`node`.** Crons Minimal-PATH enthält `/usr/local/bin` nicht (das ist nur
+in interaktiven Shells/im systemd-Unit-PATH gesetzt) - mit bloßem `node`
+schlägt der Job bei **jedem** Lauf mit `node: not found` fehl, ohne dass
+das auffällt (Exit-Code wird nicht überwacht, nur ins Log geschrieben).
+Genau das ist am 2026-07-11 passiert: der Job lief seit der
+Account-Erstellung kein einziges Mal erfolgreich, bis das am 2026-07-13
+bei einer Nutzungs-Nachfrage auffiel. Bei einer bestehenden fehlerhaften
+Installation reicht `crontab -e` und die Zeile von Hand auf den vollen
+Pfad korrigieren.
 
 Details zur Lösch-/Reset-Logik direkt im Skript-Kommentar
 (`scripts/cleanup_demo_users.js`).

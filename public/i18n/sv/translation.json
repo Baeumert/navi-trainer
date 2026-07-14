@@ -257,5 +257,7 @@
   "profile_credit_pref_real": "endast riktigt namn",
   "profile_saved_button": "Spara",
   "err_navi_name_taken": "Det här Na'vi-namnet är redan taget.",
-  "nav_source": "Källkod"
+  "nav_source": "Källkod",
+  "admin_last_login": "Senaste inloggning",
+  "admin_never_logged_in": "Aldrig"
 }

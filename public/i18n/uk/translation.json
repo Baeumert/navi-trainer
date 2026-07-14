@@ -257,5 +257,7 @@
   "profile_credit_pref_real": "лише справжнє ім'я",
   "profile_saved_button": "Зберегти",
   "err_navi_name_taken": "Це ім'я на'ві вже зайняте.",
-  "nav_source": "Вихідний код"
+  "nav_source": "Вихідний код",
+  "admin_last_login": "Останній вхід",
+  "admin_never_logged_in": "Ніколи"
 }

@@ -257,5 +257,7 @@
   "profile_credit_pref_real": "только настоящее имя",
   "profile_saved_button": "Сохранить",
   "err_navi_name_taken": "Это имя на на'ви уже занято.",
-  "nav_source": "Исходный код"
+  "nav_source": "Исходный код",
+  "admin_last_login": "Последний вход",
+  "admin_never_logged_in": "Никогда"
 }
