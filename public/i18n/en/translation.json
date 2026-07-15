@@ -110,6 +110,8 @@
   "quellen_intro": "This site relies on the following external sources and projects.",
   "quellen_fwew_title": "Fwew Dictionary API",
   "quellen_fwew_text": "All vocabulary, including translations, is loaded live from the Fwew API (tirea.learnnavi.org), an open Na'vi dictionary project maintained by the Learn Na'vi community.",
+  "quellen_dictnavi_title": "Dict-Na'vi.com",
+  "quellen_dictnavi_text": "Additional dictionary data and terms are sourced from Dict-Na'vi.com (dict-navi.com), which kindly granted permission for non-commercial use.",
   "quellen_community_title": "Learning material",
   "quellen_community_text": "Beginner vocabulary prioritization is based on material from the Learn Na'vi community.",
   "quellen_avatar_title": "Na'vi & Avatar",

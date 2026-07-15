@@ -110,6 +110,8 @@
   "quellen_intro": "See leht toetub järgmistele välistele allikatele ja projektidele.",
   "quellen_fwew_title": "Fwew sõnaraamatu API",
   "quellen_fwew_text": "Kogu sõnavara, sh tõlked, laaditakse otse Fwew API-st (tirea.learnnavi.org) - Learn Na'vi kogukonna hallatud avatud Na'vi sõnaraamatuprojektist.",
+  "quellen_dictnavi_title": "Dict-Na'vi.com",
+  "quellen_dictnavi_text": "Täiendavad sõnaraamatuandmed ja terminid pärinevad Dict-Na'vi.com'ist (dict-navi.com), kes andis lahkelt loa mitteärilikuks kasutamiseks.",
   "quellen_community_title": "Õppematerjal",
   "quellen_community_text": "Algajate sõnavara prioriseerimine põhineb Learn Na'vi kogukonna materjalidel.",
   "quellen_avatar_title": "Na'vi & Avatar",

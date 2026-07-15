@@ -110,6 +110,8 @@
   "quellen_intro": "Bu site aşağıdaki dış kaynaklara ve projelere dayanmaktadır.",
   "quellen_fwew_title": "Fwew Sözlük API'si",
   "quellen_fwew_text": "Çeviriler dahil tüm kelime dağarcığı, Learn Na'vi topluluğu tarafından yürütülen açık bir Na'vi sözlük projesi olan Fwew API'sinden (tirea.learnnavi.org) canlı olarak yüklenir.",
+  "quellen_dictnavi_title": "Dict-Na'vi.com",
+  "quellen_dictnavi_text": "Ek sözlük verileri ve terimler, ticari olmayan kullanım için nazikçe izin veren Dict-Na'vi.com'dan (dict-navi.com) alınmıştır.",
   "quellen_community_title": "Öğrenme materyali",
   "quellen_community_text": "Başlangıç seviyesi kelime önceliklendirmesi, Learn Na'vi topluluğunun materyallerine dayanmaktadır.",
   "quellen_avatar_title": "Na'vi ve Avatar",

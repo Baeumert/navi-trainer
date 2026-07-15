@@ -1968,6 +1968,8 @@ async function renderQuellen(app) {
   app.appendChild(el('div', { class: 'card legal-text' }, [
     el('h3', {}, t('quellen_fwew_title')),
     el('p', {}, t('quellen_fwew_text')),
+    el('h3', {}, t('quellen_dictnavi_title')),
+    el('p', {}, t('quellen_dictnavi_text')),
     el('h3', {}, t('quellen_community_title')),
     el('p', {}, t('quellen_community_text')),
     el('h3', {}, t('quellen_avatar_title')),

@@ -110,6 +110,8 @@
   "quellen_intro": "Этот сайт основан на следующих внешних источниках и проектах.",
   "quellen_fwew_title": "API словаря Fwew",
   "quellen_fwew_text": "Вся лексика, включая переводы, загружается напрямую из API Fwew (tirea.learnnavi.org) - открытого проекта словаря На'ви, поддерживаемого сообществом Learn Na'vi.",
+  "quellen_dictnavi_title": "Dict-Na'vi.com",
+  "quellen_dictnavi_text": "Дополнительные словарные данные и термины взяты с Dict-Na'vi.com (dict-navi.com), любезно разрешившего некоммерческое использование.",
   "quellen_community_title": "Учебные материалы",
   "quellen_community_text": "Приоритизация лексики для начинающих основана на материалах сообщества Learn Na'vi.",
   "quellen_avatar_title": "На'ви и Аватар",

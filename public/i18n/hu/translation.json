@@ -110,6 +110,8 @@
   "quellen_intro": "Ez az oldal a következő külső forrásokra és projektekre támaszkodik.",
   "quellen_fwew_title": "Fwew szótár API",
   "quellen_fwew_text": "Minden szókincs, beleértve a fordításokat is, élőben töltődik be a Fwew API-ból (tirea.learnnavi.org), amely a Learn Na'vi közösség által fenntartott nyílt Na'vi szótárprojekt.",
+  "quellen_dictnavi_title": "Dict-Na'vi.com",
+  "quellen_dictnavi_text": "A további szótári adatok és kifejezések a Dict-Na'vi.com (dict-navi.com) forrásból származnak, amely szívesen engedélyezte a nem kereskedelmi célú felhasználást.",
   "quellen_community_title": "Tananyag",
   "quellen_community_text": "A kezdő szókincs priorizálása a Learn Na'vi közösség anyagain alapul.",
   "quellen_avatar_title": "Na'vi és Avatar",

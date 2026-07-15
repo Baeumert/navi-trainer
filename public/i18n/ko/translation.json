@@ -110,6 +110,8 @@
   "quellen_intro": "이 사이트는 다음의 외부 출처와 프로젝트를 기반으로 합니다.",
   "quellen_fwew_title": "Fwew 사전 API",
   "quellen_fwew_text": "번역을 포함한 모든 단어는 Learn Na'vi 커뮤니티가 운영하는 오픈 나비어 사전 프로젝트인 Fwew API(tirea.learnnavi.org)에서 실시간으로 불러옵니다.",
+  "quellen_dictnavi_title": "Dict-Na'vi.com",
+  "quellen_dictnavi_text": "추가 사전 데이터와 용어는 Dict-Na'vi.com(dict-navi.com)에서 제공되었으며, 비상업적 이용을 흔쾌히 허락해 주었습니다.",
   "quellen_community_title": "학습 자료",
   "quellen_community_text": "초급 단어의 우선순위는 Learn Na'vi 커뮤니티의 자료를 기반으로 합니다.",
   "quellen_avatar_title": "나비어 & 아바타",

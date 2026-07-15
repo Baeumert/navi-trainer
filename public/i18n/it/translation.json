@@ -110,6 +110,8 @@
   "quellen_intro": "Questo sito si basa sulle seguenti fonti e progetti esterni.",
   "quellen_fwew_title": "API del dizionario Fwew",
   "quellen_fwew_text": "Tutto il vocabolario, incluse le traduzioni, viene caricato in tempo reale dall'API Fwew (tirea.learnnavi.org), un progetto di dizionario Na'vi aperto gestito dalla comunità Learn Na'vi.",
+  "quellen_dictnavi_title": "Dict-Na'vi.com",
+  "quellen_dictnavi_text": "Ulteriori dati del dizionario e termini provengono da Dict-Na'vi.com (dict-navi.com), che ha gentilmente autorizzato l'uso non commerciale.",
   "quellen_community_title": "Materiale didattico",
   "quellen_community_text": "La priorizzazione del vocabolario per principianti si basa su materiale della comunità Learn Na'vi.",
   "quellen_avatar_title": "Na'vi e Avatar",

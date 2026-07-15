@@ -110,6 +110,8 @@
   "quellen_intro": "Den här webbplatsen bygger på följande externa källor och projekt.",
   "quellen_fwew_title": "Fwew ordboks-API",
   "quellen_fwew_text": "Allt ordförråd, inklusive översättningar, laddas live från Fwew-API:et (tirea.learnnavi.org), ett öppet Na'vi-ordboksprojekt som underhålls av Learn Na'vi-gemenskapen.",
+  "quellen_dictnavi_title": "Dict-Na'vi.com",
+  "quellen_dictnavi_text": "Ytterligare ordboksdata och termer kommer från Dict-Na'vi.com (dict-navi.com), som vänligt gav tillstånd för icke-kommersiellt bruk.",
   "quellen_community_title": "Läromaterial",
   "quellen_community_text": "Prioriteringen av nybörjarordförråd bygger på material från Learn Na'vi-gemenskapen.",
   "quellen_avatar_title": "Na'vi & Avatar",

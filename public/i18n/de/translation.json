@@ -110,6 +110,8 @@
   "quellen_intro": "Diese Seite stützt sich auf folgende externe Quellen und Projekte.",
   "quellen_fwew_title": "Fwew-Wörterbuch-API",
   "quellen_fwew_text": "Alle Vokabeln inklusive Übersetzungen werden live von der Fwew-API (tirea.learnnavi.org) geladen, einem offenen Na'vi-Wörterbuch-Projekt der Learn-Na'vi-Community.",
+  "quellen_dictnavi_title": "Dict-Na'vi.com",
+  "quellen_dictnavi_text": "Zusätzliche Wörterbuchdaten und Begriffe stammen von Dict-Na'vi.com (dict-navi.com), das uns die nichtkommerzielle Nutzung freundlicherweise gestattet hat.",
   "quellen_community_title": "Lernmaterial",
   "quellen_community_text": "Die Priorisierung der Anfänger-Vokabeln orientiert sich an Material aus der Learn-Na'vi-Community.",
   "quellen_avatar_title": "Na'vi & Avatar",
