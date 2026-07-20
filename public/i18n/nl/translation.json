@@ -261,5 +261,6 @@
   "err_navi_name_taken": "Deze Na'vi-naam is al in gebruik.",
   "nav_source": "Broncode",
   "admin_last_login": "Laatste login",
-  "admin_never_logged_in": "Nooit"
+  "admin_never_logged_in": "Nooit",
+  "trainer_origin_label": "Woordherkomst"
 }

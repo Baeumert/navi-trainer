@@ -261,5 +261,6 @@
   "err_navi_name_taken": "Det här Na'vi-namnet är redan taget.",
   "nav_source": "Källkod",
   "admin_last_login": "Senaste inloggning",
-  "admin_never_logged_in": "Aldrig"
+  "admin_never_logged_in": "Aldrig",
+  "trainer_origin_label": "Ordets ursprung"
 }

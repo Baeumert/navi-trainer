@@ -261,5 +261,6 @@
   "err_navi_name_taken": "Bu Na'vi adı zaten alınmış.",
   "nav_source": "Kaynak Kod",
   "admin_last_login": "Son giriş",
-  "admin_never_logged_in": "Hiç"
+  "admin_never_logged_in": "Hiç",
+  "trainer_origin_label": "Kelime kökeni"
 }

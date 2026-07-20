@@ -28,6 +28,14 @@ function priorityDateFor(fwewId) {
   return row ? row.priority_date : null;
 }
 
+// Ronnys Wortherkunfts-Anmerkung aus der Reyknap-Liste (falls vorhanden) -
+// gerade beim ersten Kennenlernen (Abschreiben) hilfreich, gleicher
+// Feldname wie im Trainer (originNote).
+function originNoteFor(fwewId) {
+  const row = db.prepare('SELECT origin_note FROM vocab_priority WHERE fwew_id = ?').get(fwewId);
+  return row && row.origin_note ? row.origin_note : null;
+}
+
 router.get('/next', (req, res) => {
   if (!fwew.isReady()) {
     return res.status(503).json({ error: 'fwew_unavailable' });
@@ -57,6 +65,7 @@ router.get('/next', (req, res) => {
     navi: c.word.Navi,
     translations: fwew.translationsOf(c.word),
     priority_date: c.priority_date,
+    originNote: originNoteFor(String(c.word.ID)),
   }));
 
   res.json(rows);

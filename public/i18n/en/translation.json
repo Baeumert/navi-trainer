@@ -261,5 +261,6 @@
   "err_navi_name_taken": "This Na'vi name is already taken.",
   "nav_source": "Source Code",
   "admin_last_login": "Last login",
-  "admin_never_logged_in": "Never"
+  "admin_never_logged_in": "Never",
+  "trainer_origin_label": "Word origin"
 }

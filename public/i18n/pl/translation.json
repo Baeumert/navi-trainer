@@ -261,5 +261,6 @@
   "err_navi_name_taken": "To imię na'vi jest już zajęte.",
   "nav_source": "Kod źródłowy",
   "admin_last_login": "Ostatnie logowanie",
-  "admin_never_logged_in": "Nigdy"
+  "admin_never_logged_in": "Nigdy",
+  "trainer_origin_label": "Pochodzenie słowa"
 }

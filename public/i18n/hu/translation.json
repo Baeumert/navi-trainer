@@ -261,5 +261,6 @@
   "err_navi_name_taken": "Ez a Na'vi név már foglalt.",
   "nav_source": "Forráskód",
   "admin_last_login": "Utolsó bejelentkezés",
-  "admin_never_logged_in": "Soha"
+  "admin_never_logged_in": "Soha",
+  "trainer_origin_label": "A szó eredete"
 }

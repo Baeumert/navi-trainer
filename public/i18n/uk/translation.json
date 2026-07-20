@@ -261,5 +261,6 @@
   "err_navi_name_taken": "Це ім'я на'ві вже зайняте.",
   "nav_source": "Вихідний код",
   "admin_last_login": "Останній вхід",
-  "admin_never_logged_in": "Ніколи"
+  "admin_never_logged_in": "Ніколи",
+  "trainer_origin_label": "Походження слова"
 }

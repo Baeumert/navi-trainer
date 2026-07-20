@@ -261,5 +261,6 @@
   "err_navi_name_taken": "이 나비 이름은 이미 사용 중입니다.",
   "nav_source": "소스 코드",
   "admin_last_login": "마지막 로그인",
-  "admin_never_logged_in": "없음"
+  "admin_never_logged_in": "없음",
+  "trainer_origin_label": "단어 유래"
 }

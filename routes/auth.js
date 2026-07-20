@@ -269,9 +269,17 @@ router.delete('/me', requireAuth, authLimiter, (req, res) => {
 function gatherUserData(userId) {
   const account = db
     .prepare(
-      'SELECT id, name, navi_name, credit_name_pref, email, is_admin, is_creator, is_reviewer, welcome_seen, created_at FROM users WHERE id = ?'
+      'SELECT id, name, navi_name, credit_name_pref, email, is_admin, is_creator, is_reviewer, welcome_seen, created_at, last_login FROM users WHERE id = ?'
     )
     .get(userId);
+  // Danksagungs-Eintrag (grammar_credits) gehoert zur vollstaendigen
+  // Auskunft, solange das Konto existiert - nach einer Konto-Loeschung ist
+  // er bewusst nicht mehr ueber user_id zuordenbar (siehe
+  // lib/userDeletion.js / Datenschutzerklaerung).
+  const grammarCredit = db
+    .prepare('SELECT display_name, exercise_count, modules, created_at, updated_at FROM grammar_credits WHERE user_id = ?')
+    .get(userId);
+  if (grammarCredit) grammarCredit.modules = JSON.parse(grammarCredit.modules);
   const vocabProgress = db
     .prepare('SELECT vocab_id, direction, level, due_at, correct_count, wrong_count, last_seen FROM progress WHERE user_id = ?')
     .all(userId);
@@ -297,6 +305,9 @@ function gatherUserData(userId) {
   return {
     exported_at: new Date().toISOString(),
     account,
+    // null, wenn (noch) kein Danksagungs-Eintrag existiert - toCsv()
+    // ueberspringt null-Kategorien sauber (String(value ?? '')).
+    grammar_credit: grammarCredit || null,
     vocab_progress: vocabProgress,
     vocab_activation: vocabActivation,
     grammar_attempts: grammarAttempts,

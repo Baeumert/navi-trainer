@@ -34,6 +34,13 @@ function priorityDateFor(fwewId) {
   return row ? row.priority_date : null;
 }
 
+// Ronnys Wortherkunfts-Anmerkung aus der Reyknap-Liste (falls vorhanden) -
+// wird auf der Na'vi-Seite der Karteikarte angezeigt.
+function originNoteFor(fwewId) {
+  const row = db.prepare('SELECT origin_note FROM vocab_priority WHERE fwew_id = ?').get(fwewId);
+  return row && row.origin_note ? row.origin_note : null;
+}
+
 // Reichert eine Wort-ID mit den live geladenen Fwew-Daten an (alle
 // verfuegbaren Uebersetzungen, nicht nur DE/EN). Woerter, die im Cache
 // nicht (mehr) gefunden werden, werden herausgefiltert statt mit leeren
@@ -47,6 +54,7 @@ function enrich(row) {
     partOfSpeech: word.PartOfSpeech,
     translations: fwew.translationsOf(word),
     ...fwew.metaOf(word),
+    originNote: originNoteFor(row.vocab_id),
   };
 }
 

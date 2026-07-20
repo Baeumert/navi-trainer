@@ -79,6 +79,15 @@ function primaryTranslation(word) {
   return hit ? hit.text : '';
 }
 
+// Wortherkunfts-Anmerkung aus der kuratierten Anfaengerliste (kommt vom
+// Server nur fuer priorisierte Woerter mit gepflegter Herkunft) - eigene
+// Zeile, weil sie deutlich laenger sein kann als die Meta-Infos. Wird im
+// Karteikarten-Trainer und auf der Abschreiben-Seite genutzt.
+function originNoteLine(word) {
+  if (!word.originNote) return null;
+  return el('div', { class: 'flashcard-meta' }, `${t('trainer_origin_label')}: ${word.originNote}`);
+}
+
 async function api(path, opts = {}) {
   const res = await fetch('/api' + path, {
     headers: { 'Content-Type': 'application/json' },
@@ -428,6 +437,8 @@ async function renderActivate(app) {
 
     cardWrap.appendChild(el('div', { class: 'flashcard-word', html: naviHtml(word.navi) }));
     cardWrap.appendChild(el('div', { class: 'flashcard-hint' }, primaryTranslation(word)));
+    const origin = originNoteLine(word);
+    if (origin) cardWrap.appendChild(origin);
 
     const errBox = el('div', { class: 'error-msg', style: 'display:none' }, t('activate_mismatch'));
     const okBox = el('div', { class: 'ok-msg', style: 'display:none' }, '✓');
@@ -587,6 +598,8 @@ async function renderTrainer(app) {
     if (typeof shown === 'object') {
       const meta = naviMetaLine(word);
       if (meta) cardWrap.appendChild(meta);
+      const origin = originNoteLine(word);
+      if (origin) cardWrap.appendChild(origin);
     }
     cardWrap.appendChild(el('div', { class: 'flashcard-hint' }, t('trainer_flip_hint')));
 
@@ -1925,11 +1938,11 @@ function renderDatenschutz(app) {
       'E-Mail: ', el('a', { href: 'mailto:Webmaster@diy-ehome.de' }, 'Webmaster@diy-ehome.de'),
     ]),
     el('h3', {}, 'Registrierung und Nutzerkonto'),
-    el('p', {}, 'Bei der Registrierung werden Name, E-Mail-Adresse und ein Passwort erhoben. Das Passwort wird ausschließlich als kryptographischer Hash (scrypt) gespeichert, nie im Klartext. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Nutzungsverhältnisses).'),
-    el('h3', {}, 'Session-Cookie'),
-    el('p', {}, 'Zur Aufrechterhaltung des Login-Status wird ein technisch notwendiges Session-Cookie gesetzt. Ohne dieses Cookie ist ein Login nicht möglich. Es werden keine Tracking-, Analyse- oder Marketing-Cookies verwendet.'),
+    el('p', {}, 'Bei der Registrierung werden Name, E-Mail-Adresse und ein Passwort erhoben. Das Passwort wird ausschließlich als kryptographischer Hash (scrypt) gespeichert, nie im Klartext. Optional kannst du in deinem Profil zusätzlich einen Na\'vi-Namen sowie deine bevorzugte Namensform für die Danksagungen-Seite hinterlegen. Außerdem wird der Zeitpunkt deines letzten Logins gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Nutzungsverhältnisses). Alle Kontodaten werden bis zur Löschung deines Kontos gespeichert.'),
+    el('h3', {}, 'Session-Cookie und lokaler Speicher'),
+    el('p', {}, 'Zur Aufrechterhaltung des Login-Status wird ein technisch notwendiges Session-Cookie gesetzt (Gültigkeit: 30 Tage; die zugehörigen Sitzungsdaten auf dem Server werden nach Ablauf automatisch gelöscht, bei Konto-Löschung sofort). Ohne dieses Cookie ist ein Login nicht möglich. Zusätzlich speichert der Browser im localStorage ausschließlich deine Cookie-Entscheidung und die gewählte Oberflächensprache (§ 25 Abs. 2 TTDSG, technisch erforderlich). Es werden keine Tracking-, Analyse- oder Marketing-Cookies verwendet.'),
     el('h3', {}, 'Server-Logs'),
-    el('p', {}, 'Beim Zugriff auf diese Seite werden wie bei jedem Webserver technisch bedingt IP-Adresse und Zugriffszeitpunkt kurzzeitig in Server-Logs verarbeitet. Diese dienen ausschließlich der technischen Absicherung des Betriebs und werden nicht mit Nutzerkonten verknüpft ausgewertet.'),
+    el('p', {}, 'Beim Zugriff auf diese Seite werden wie bei jedem Webserver technisch bedingt IP-Adresse und Zugriffszeitpunkt in Server-Logs verarbeitet (Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO, berechtigtes Interesse an der technischen Absicherung des Betriebs). Die Logs werden nicht mit Nutzerkonten verknüpft ausgewertet und spätestens nach 14 Tagen automatisch gelöscht.'),
     el('h3', {}, 'Externe Wörterbuch-API'),
     el('p', {}, 'Vokabelabfragen werden serverseitig an die Fwew-API (tirea.learnnavi.org) gestellt. Dabei werden keine personenbezogenen Daten übertragen - lediglich das jeweils abgefragte Na\'vi-Wort verlässt in diesem Zusammenhang den Server.'),
     el('h3', {}, 'Hosting'),
@@ -1957,8 +1970,14 @@ function renderDatenschutz(app) {
       'von dir erstellte, bereits freigegebene Grammatik-Übungen bleiben als Community-Inhalt erhalten (nur die Verknüpfung zu deinem Konto wird entfernt), ebenso der oben beschriebene minimale Danksagungs-Eintrag. Der letzte verbleibende Administrator-Account kann aus betrieblichen Gründen nicht gelöscht werden, solange kein weiterer Administrator existiert.',
     ]),
 
-    el('h3', {}, 'Weitere Rechte'),
-    el('p', {}, 'Du hast außerdem das Recht auf Berichtigung und Einschränkung der Verarbeitung deiner Daten (Art. 16, 18 DSGVO). Wende dich dazu an die oben genannte Kontaktadresse.'),
+    el('h3', {}, 'Recht auf Datenübertragbarkeit (Art. 20 DSGVO)'),
+    el('p', {}, 'Der oben beschriebene Datenexport steht dir in den strukturierten, maschinenlesbaren Formaten JSON und CSV zur Verfügung und erfüllt damit auch dein Recht auf Datenübertragbarkeit.'),
+
+    el('h3', {}, 'Widerspruchsrecht (Art. 21 DSGVO)'),
+    el('p', {}, 'Soweit eine Verarbeitung auf unser berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO) gestützt wird - das betrifft insbesondere den oben beschriebenen Danksagungs-Eintrag und die Server-Logs -, kannst du ihr jederzeit aus Gründen, die sich aus deiner besonderen Situation ergeben, widersprechen. Wende dich dazu an die oben genannte Kontaktadresse; wir prüfen dann, ob zwingende schutzwürdige Gründe für die Weiterverarbeitung vorliegen.'),
+
+    el('h3', {}, 'Weitere Rechte und Beschwerderecht'),
+    el('p', {}, 'Du hast außerdem das Recht auf Berichtigung und Einschränkung der Verarbeitung deiner Daten (Art. 16, 18 DSGVO). Wende dich dazu an die oben genannte Kontaktadresse. Unabhängig davon hast du das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO). Für den Verantwortlichen zuständig ist das Bayerische Landesamt für Datenschutzaufsicht (BayLDA), Promenade 18, 91522 Ansbach, www.lda.bayern.de.'),
   ]));
 }
 
